@@ -4,19 +4,19 @@ const methodList = { MULTIPLY: "*", DIVIDE: "/", ADD: "+", SUBTRACT: "-" };
 
 /* GET home page. */
 router.get("/", function(req, res, next) {
-  const method = req.query.method.toUpperCase();
+  let method = req.query.method || "";
   const x = parseInt(req.query.x);
   const y = parseInt(req.query.y);
 
   const validMethods = Object.keys(methodList);
-  const isValidMethod = validMethods.includes(method);
 
   let message = `Please enter a valid method: ${validMethods.join(" | ")}`;
   let equation = ``;
 
-  if (isValidMethod) {
-    const operator = methodList[method];
+  if (validMethods.includes(method.toUpperCase())) {
+    method = method.toUpperCase();
     message = method;
+    const operator = methodList[method];
 
     if (isNaN(x) || isNaN(y)) {
       equation +=
